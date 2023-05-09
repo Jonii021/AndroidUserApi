@@ -3,9 +3,6 @@ package fi.tuni.userapi
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -20,13 +17,13 @@ import java.net.URL
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
-    lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         recyclerView = findViewById(R.id.recycler_view)
 
-        generateUsersList("https://dummyjson.com/users")
+        generateUsersList()
 
         // code for bottom navigation to change activities
         val bottomNavigation: BottomNavigationView = findViewById(R.id.BottomNav)
@@ -53,18 +50,18 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    private fun generateUsersList(url: String): Unit {
+    private fun generateUsersList(url: String = "https://dummyjson.com/users"): Unit {
         val usersList = mutableListOf<User>()
 // connection to dummyjson
         thread {
-            var result: String? = null
+            var result: String?
             val sb = StringBuffer()
             val myUrl = URL(url)
             val connection = myUrl.openConnection() as HttpURLConnection
             val reader = BufferedReader(InputStreamReader(connection.inputStream))
             // turns into optional string
             reader.use {
-                var line: String? = null
+                var line: String?
                 do {
                     line = it.readLine()
                     sb.append(line)
