@@ -3,6 +3,8 @@ package fi.tuni.userapi
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.EditText
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -10,6 +12,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import fi.tuni.userapi.adapters.Adapter
 import fi.tuni.userapi.models.User
 import fi.tuni.userapi.models.UsersJsonObject
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -23,7 +27,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         recyclerView = findViewById(R.id.recycler_view)
 
+        // search for users
+        var search : EditText = findViewById(R.id.Search)
         generateUsersList()
+        search.addTextChangedListener(){
+            if (search.text.isNullOrEmpty()) {
+                generateUsersList()
+            } else {
+                generateUsersList("https://dummyjson.com/users/search?q=${search.text}")
+            }
+        }
+
 
         // code for bottom navigation to change activities
         val bottomNavigation: BottomNavigationView = findViewById(R.id.BottomNav)
@@ -52,23 +66,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun generateUsersList(url: String = "https://dummyjson.com/users"): Unit {
         val usersList = mutableListOf<User>()
-// connection to dummyjson
         thread {
-            var result: String?
-            val sb = StringBuffer()
-            val myUrl = URL(url)
-            val connection = myUrl.openConnection() as HttpURLConnection
-            val reader = BufferedReader(InputStreamReader(connection.inputStream))
-            // turns into optional string
-            reader.use {
-                var line: String?
-                do {
-                    line = it.readLine()
-                    sb.append(line)
-                } while (line != null)
-                result = sb.toString()
-            }
-            reader.close()
+            // connection to dummyjson
+            var result: String? = getRequest(url)
+
             //String to User object
             val mp = ObjectMapper()
             val myObject: UsersJsonObject = mp.readValue(result, UsersJsonObject::class.java)
@@ -83,5 +84,24 @@ class MainActivity : AppCompatActivity() {
                 recyclerView.setHasFixedSize(true)
             }
         }
+    }
+
+    // connection to dummyjson using okhttp
+    var client: OkHttpClient = OkHttpClient();
+    private fun getRequest(sUrl: String): String? {
+        var result: String? = null
+        try {
+            // Create URL
+            val url = URL(sUrl)
+            // Build request
+            val request = Request.Builder().url(url).build()
+            // Execute request
+            val response = client.newCall(request).execute()
+            result = response.body?.string()
+        }
+        catch(err:Error) {
+            print("Error when executing get request")
+        }
+        return result
     }
 }

@@ -6,13 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <EditText
+        android:id="@+id/Search"
+        android:layout_width="411dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="1dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/recycler_view"
-        android:layout_width="409dp"
-        android:layout_height="668dp"
+        android:layout_width="413dp"
+        android:layout_height="614dp"
         app:layout_constraintBottom_toTopOf="@+id/BottomNav"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
         tools:listitem="@layout/item" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -22,6 +34,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav" />
+
 
 
 
