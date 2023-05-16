@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import fi.tuni.userapi.adapters.Adapter
 import fi.tuni.userapi.models.User
 import fi.tuni.userapi.models.UsersJsonObject
+import fi.tuni.userapi.controllers.getRequest
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.BufferedReader
@@ -65,10 +66,10 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun generateUsersList(url: String = "https://dummyjson.com/users"): Unit {
-        val usersList = mutableListOf<User>()
+        var usersList = mutableListOf<User>()
         thread {
             // connection to dummyjson
-            var result: String? = getRequest(url)
+            var result = getRequest(url)
 
             //String to User object
             val mp = ObjectMapper()
@@ -86,22 +87,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // connection to dummyjson using okhttp
-    var client: OkHttpClient = OkHttpClient();
-    private fun getRequest(sUrl: String): String? {
-        var result: String? = null
-        try {
-            // Create URL
-            val url = URL(sUrl)
-            // Build request
-            val request = Request.Builder().url(url).build()
-            // Execute request
-            val response = client.newCall(request).execute()
-            result = response.body?.string()
-        }
-        catch(err:Error) {
-            print("Error when executing get request")
-        }
-        return result
-    }
+
 }

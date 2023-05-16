@@ -9,6 +9,13 @@ class AddUser : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_user)
+
+
+
+
+
+
+
         val bottomNavigation: BottomNavigationView = findViewById(R.id.BottomNav)
         bottomNavigation.selectedItemId = R.id.AddUser;
         bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->
@@ -24,5 +31,6 @@ class AddUser : AppCompatActivity() {
                 else -> false
             }
         }
+
     }
 }
