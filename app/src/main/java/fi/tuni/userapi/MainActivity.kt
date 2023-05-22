@@ -13,12 +13,7 @@ import fi.tuni.userapi.adapters.Adapter
 import fi.tuni.userapi.models.User
 import fi.tuni.userapi.models.UsersJsonObject
 import fi.tuni.userapi.controllers.getRequest
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
+
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
@@ -29,9 +24,9 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recycler_view)
 
         // search for users
-        var search : EditText = findViewById(R.id.Search)
+        val search : EditText = findViewById(R.id.Search)
         generateUsersList()
-        search.addTextChangedListener(){
+        search.addTextChangedListener{
             if (search.text.isNullOrEmpty()) {
                 generateUsersList()
             } else {
@@ -65,11 +60,11 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    private fun generateUsersList(url: String = "https://dummyjson.com/users"): Unit {
-        var usersList = mutableListOf<User>()
+    private fun generateUsersList(url: String = "https://dummyjson.com/users") {
+        val usersList = mutableListOf<User>()
         thread {
             // connection to dummyjson
-            var result = getRequest(url)
+            val result = getRequest(url)
 
             //String to User object
             val mp = ObjectMapper()

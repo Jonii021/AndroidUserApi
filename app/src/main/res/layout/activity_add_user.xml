@@ -27,7 +27,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/adduser"
         android:autofillHints="" />
 
     <EditText
@@ -45,13 +45,13 @@
 
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/phone"
         android:layout_width="366dp"
         android:layout_height="42dp"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Phone number"
-        android:inputType="textPersonName"
+        android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.479"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +59,7 @@
         android:autofillHints="" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/adduser"
         android:layout_width="409dp"
         android:layout_height="54dp"
         android:layout_marginStart="1dp"
@@ -79,5 +79,5 @@
         android:layout_marginTop="28dp"
         android:text="Submit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+        app:layout_constraintTop_toBottomOf="@+id/phone" />
 </androidx.constraintlayout.widget.ConstraintLayout>
