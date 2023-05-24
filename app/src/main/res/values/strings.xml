@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">UserApi</string>
+    <string name="update_user">Update user</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="phone_number">Phone number</string>
+    <string name="add_user">Add user</string>
+    <string name="lastname">Lastname</string>
+    <string name="firstname">Firstname</string>
 </resources>

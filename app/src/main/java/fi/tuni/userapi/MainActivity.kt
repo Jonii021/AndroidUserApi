@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         // code for bottom navigation to change activities
         val bottomNavigation: BottomNavigationView = findViewById(R.id.BottomNav)
-        bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->
+        bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.Home -> {
                     true
@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 
 
 }

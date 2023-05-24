@@ -19,6 +19,7 @@ fun getRequest(sUrl: String): String? {
         // Execute request
         val response = client.newCall(request).execute()
         result = response.body?.string()
+        println(result)
     }
     catch(err:Error) {
         print("Error when executing get request")
@@ -64,4 +65,27 @@ fun postRequest(user: User) {
 
         response.close()
     }
+
+}
+
+fun updateRequest(user: User) {
+    thread {
+        val url = URL("https://dummyjson.com/users/${user.id}")
+
+        val formBody: RequestBody = FormBody.Builder()
+            .add("firstName", user.firstName.toString())
+            .add("lastName", user.lastName.toString())
+            .add("phone", user.phone.toString())
+            .build()
+
+        // Build request
+        val request: Request = Request.Builder().url(url).put(formBody).build()
+
+        // Execute request
+        val response = client.newCall(request).execute()
+        println(response.body?.string())
+
+        response.close()
+    }
+
 }
