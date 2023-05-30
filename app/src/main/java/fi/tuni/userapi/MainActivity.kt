@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         // search for users
         val search : EditText = findViewById(R.id.Search)
         generateUsersList()
+
+        // checks if you have searched something
         search.addTextChangedListener{
             if (search.text.isNullOrEmpty()) {
                 generateUsersList()
@@ -54,12 +56,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
 
-
-
+    /**
+     * generates a list of users and sends to adapter
+     *
+     * @param [url] url from which data will be requested from
+     */
     private fun generateUsersList(url: String = "https://dummyjson.com/users") {
         val usersList = mutableListOf<User>()
         thread {

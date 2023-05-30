@@ -16,18 +16,21 @@ class AddUser : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_user)
 
+        // create variables from activity_add_user.xml
         val firstName: EditText = findViewById(R.id.firstName)
         val lastName: EditText = findViewById(R.id.lastName)
         val phone: EditText = findViewById(R.id.phone)
         val submit: Button = findViewById(R.id.button)
 
+
+        // create alert for user added
         val builder = AlertDialog.Builder(this)
 
         builder.setTitle("User Added!")
         builder.setMessage("You have added a user")
 
         builder.setNegativeButton("Close"){ dialog, _ ->
-            dialog.cancel()
+            dialog.dismiss()
         }
 
         val alertDialog: AlertDialog = builder.create()
@@ -50,7 +53,7 @@ class AddUser : AppCompatActivity() {
         }
 
 
-
+        // code for bottom navigation to change activities
         val bottomNavigation: BottomNavigationView = findViewById(R.id.BottomNav)
         bottomNavigation.selectedItemId = R.id.AddUser
         bottomNavigation.setOnItemSelectedListener { menuItem ->

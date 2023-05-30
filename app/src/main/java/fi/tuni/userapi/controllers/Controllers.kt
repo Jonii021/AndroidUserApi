@@ -8,7 +8,12 @@ import kotlin.concurrent.thread
 
 var client: OkHttpClient = OkHttpClient()
 
-// connection to dummyjson using okhttp
+/**
+ * get request for users
+ *
+ * @param [sUrl] url from where json is requested
+ * @return returns json as string
+ */
 fun getRequest(sUrl: String): String? {
     var result: String? = null
     try {
@@ -19,7 +24,7 @@ fun getRequest(sUrl: String): String? {
         // Execute request
         val response = client.newCall(request).execute()
         result = response.body?.string()
-        println(result)
+        //println(result)
     }
     catch(err:Error) {
         print("Error when executing get request")
@@ -27,8 +32,11 @@ fun getRequest(sUrl: String): String? {
     return result
 }
 
-
-// sends delete request
+/**
+ * sends delete request
+ *
+ * @param [id]  id of person that will be deleted
+ */
 fun deleteRequest(id: Int) {
     thread {
 
@@ -45,10 +53,15 @@ fun deleteRequest(id: Int) {
     }
 }
 
+/**
+ * sends post request
+ *
+ * @param [user] User object that will be posted
+ */
 fun postRequest(user: User) {
     thread {
         val url = URL("https://dummyjson.com/users/add")
-        // add user information to post form and build formbody
+        // add user information to post form and build form body
 
         val formBody: RequestBody = FormBody.Builder()
             .add("firstName", user.firstName.toString())
@@ -68,10 +81,16 @@ fun postRequest(user: User) {
 
 }
 
+/**
+ * sends update request
+ *
+ * @param [user]  User object that will be updated
+ */
 fun updateRequest(user: User) {
     thread {
         val url = URL("https://dummyjson.com/users/${user.id}")
 
+        // creates form body of update request
         val formBody: RequestBody = FormBody.Builder()
             .add("firstName", user.firstName.toString())
             .add("lastName", user.lastName.toString())
@@ -83,7 +102,8 @@ fun updateRequest(user: User) {
 
         // Execute request
         val response = client.newCall(request).execute()
-        println(response.body?.string())
+
+        //println(response.body?.string())
 
         response.close()
     }

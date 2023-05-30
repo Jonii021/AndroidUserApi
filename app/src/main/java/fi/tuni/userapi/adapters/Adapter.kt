@@ -54,35 +54,49 @@ class Adapter(private val userList: MutableList<User>) :
 
         // handle update
         holder.updatebtn.setOnClickListener {
+
+            // create update dialog
             val updateDialog = AlertDialog.Builder(holder.itemView.context)
+
+            // inflate custom alertdialog view
             val updateUserView= LayoutInflater.from(holder.itemView.context).inflate(
                 R.layout.update_user,
                 null
             )
+            // create variables from update_user.xml
             val firstName: EditText = updateUserView.findViewById(R.id.firstName)
             val lastName: EditText = updateUserView.findViewById(R.id.lastName)
             val phone: EditText = updateUserView.findViewById(R.id.phone)
 
+            // set textfield hints as current user information
             firstName.hint = currentItem.firstName
             lastName.hint = currentItem.lastName
             phone.hint = currentItem.phone
 
             updateDialog.setView(updateUserView)
 
-
+                // update button in update dialogue window
                 .setPositiveButton("Update") { dialog, _ ->
 
                     val updatedFirstName = firstName.text.toString()
                     val updatedLastName = lastName.text.toString()
                     val updatedPhone = phone.text.toString()
 
-                    updateRequest(User(
-                        id = currentItem.id,
-                        firstName = updatedFirstName,
-                        lastName = updatedLastName,
-                        phone = updatedPhone
-                    ))
+                    // send update request
+                    try {
+                        updateRequest(
+                            User(
+                                id = currentItem.id,
+                                firstName = updatedFirstName,
+                                lastName = updatedLastName,
+                                phone = updatedPhone
+                            )
+                        )
+                    } catch(err:Error) {
+                        print("Error when executing post request")
+                    }
 
+                    // update user information in frontend
                     currentItem.firstName =
                         updatedFirstName.ifEmpty { currentItem.firstName }
 
@@ -95,6 +109,8 @@ class Adapter(private val userList: MutableList<User>) :
                     val index = userList.indexOf(currentItem)
                     notifyItemChanged(index)
                 }
+
+                // cancel button in update dialogue window
                 .setNegativeButton("Cancel") { dialog, _ ->
                     dialog.dismiss()
                 }
@@ -106,6 +122,7 @@ class Adapter(private val userList: MutableList<User>) :
 
     override fun getItemCount() = userList.size
 
+    // holds variables from item.xml
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.name)
         val phone: TextView = itemView.findViewById(R.id.phone)
